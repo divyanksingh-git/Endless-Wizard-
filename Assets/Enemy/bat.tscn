@@ -1,0 +1,207 @@
+[gd_scene load_steps=18 format=3 uid="uid://ff14u3nss12o"]
+
+[ext_resource type="Script" path="res://Assets/Enemy/bat.gd" id="1_hfpka"]
+[ext_resource type="Texture2D" uid="uid://bp4yi60nr68q6" path="res://Assets/Enemy/Bat_Sprite_Sheet.png" id="1_oah6f"]
+[ext_resource type="Shader" path="res://Assets/Enemy/bat.gdshader" id="2_7b6xt"]
+[ext_resource type="Texture2D" uid="uid://t73raj641omd" path="res://Assets/shadow.png" id="3_yse6y"]
+[ext_resource type="AudioStream" uid="uid://dv4ebf51iognm" path="res://Assets/bat-chirp-close-up-29644.mp3" id="4_p62e7"]
+[ext_resource type="Texture2D" uid="uid://d3udl8idxwkgy" path="res://Assets/Environment/progress.png" id="5_61bq4"]
+[ext_resource type="Texture2D" uid="uid://c13xr5l0if1oj" path="res://Assets/Environment/border.png" id="6_h1a31"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3bkhr"]
+resource_local_to_scene = true
+shader = ExtResource("2_7b6xt")
+shader_parameter/flash_color = null
+shader_parameter/flash_modifier = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_12m68"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5a5v"]
+radius = 374.021
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7k2ju"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_876ko"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D2:material:shader_parameter/flash_modifier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_nvctr"]
+resource_name = "fly"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D2:material:shader_parameter/flash_modifier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a2mii"]
+_data = {
+"RESET": SubResource("Animation_876ko"),
+"fly": SubResource("Animation_nvctr")
+}
+
+[sub_resource type="Animation" id="Animation_fmjg4"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_871vb"]
+resource_name = "damage"
+length = 0.03
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.02, 0.03)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ioch3"]
+_data = {
+"RESET": SubResource("Animation_fmjg4"),
+"damage": SubResource("Animation_871vb")
+}
+
+[node name="bat" type="CharacterBody2D"]
+position = Vector2(0, 4)
+z_index = 1
+collision_layer = 4
+collision_mask = 22
+script = ExtResource("1_hfpka")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3bkhr")
+texture = ExtResource("1_oah6f")
+hframes = 5
+vframes = 3
+frame = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_12m68")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("CircleShape2D_y5a5v")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_7k2ju")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 12.5)
+scale = Vector2(0.5, 0.3)
+z_index = -1
+z_as_relative = false
+texture = ExtResource("3_yse6y")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_p62e7")
+volume_db = -12.5
+
+[node name="bar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -8.0
+offset_top = -14.0
+offset_right = 142.0
+offset_bottom = 16.0
+scale = Vector2(0.107068, 0.0691004)
+metadata/_edit_group_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="bar"]
+offset_right = 150.0
+offset_bottom = 30.0
+value = 100.0
+texture_under = ExtResource("5_61bq4")
+texture_over = ExtResource("6_h1a31")
+texture_progress = ExtResource("5_61bq4")
+tint_under = Color(0.0784314, 0.0784314, 0.0784314, 1)
+tint_over = Color(0.137255, 0.137255, 0.137255, 1)
+tint_progress = Color(0.54902, 0, 0.0196078, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 0.65
+libraries = {
+"": SubResource("AnimationLibrary_a2mii")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ioch3")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D2" to="." method="_on_area_2d_2_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

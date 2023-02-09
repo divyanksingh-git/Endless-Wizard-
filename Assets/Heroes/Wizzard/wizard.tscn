@@ -1,0 +1,407 @@
+[gd_scene load_steps=29 format=3 uid="uid://b8gt8xr4ffwg4"]
+
+[ext_resource type="Script" path="res://Wizard.gd" id="1_85px3"]
+[ext_resource type="Shader" path="res://Assets/Heroes/Wizzard/wizard.gdshader" id="2_48xkr"]
+[ext_resource type="Texture2D" uid="uid://bu0dkocyew384" path="res://Assets/Heroes/Wizzard/Idle/Idle-Sheet.png" id="2_ey6cn"]
+[ext_resource type="Texture2D" uid="uid://c550kytct2mj2" path="res://Assets/Heroes/Wizzard/Run/Run-Sheet.png" id="3_lbjvt"]
+[ext_resource type="Texture2D" uid="uid://capy7h0histcn" path="res://Assets/Heroes/Wizzard/Death/Death-Sheet.png" id="4_wy4uo"]
+[ext_resource type="Texture2D" uid="uid://ckxf1nvt4yk58" path="res://Assets/Weapons/Hands/Hands.png" id="5_5ly6x"]
+[ext_resource type="Script" path="res://Assets/Heroes/Wizzard/hand.gd" id="5_tq111"]
+[ext_resource type="Texture2D" uid="uid://jxnkawppoecn" path="res://Assets/Weapons/Bone/staffback.png" id="6_nafhe"]
+[ext_resource type="Texture2D" uid="uid://bp3rs7yhj8eib" path="res://Assets/Weapons/Bone/stafffront.png" id="8_qr2hw"]
+[ext_resource type="Script" path="res://Assets/Heroes/Wizzard/Camera2D.gd" id="9_1nnx5"]
+[ext_resource type="Texture2D" uid="uid://t73raj641omd" path="res://Assets/shadow.png" id="9_gwj1r"]
+[ext_resource type="PackedScene" uid="uid://cv2dot5p5likw" path="res://Level/spawner.tscn" id="9_js6ln"]
+[ext_resource type="AudioStream" uid="uid://dgm0xd1dgi7a0" path="res://Assets/Grass Running.wav" id="12_b57v1"]
+[ext_resource type="AudioStream" uid="uid://c2d1nhiwvd23g" path="res://Assets/death.mp3" id="13_c8vqd"]
+[ext_resource type="Texture2D" uid="uid://d3udl8idxwkgy" path="res://Assets/Environment/progress.png" id="14_3toid"]
+[ext_resource type="Texture2D" uid="uid://c13xr5l0if1oj" path="res://Assets/Environment/border.png" id="15_ieax2"]
+[ext_resource type="Texture2D" uid="uid://do847pkjwlxix" path="res://Assets/Weapons/shield.png" id="16_qnqlx"]
+
+[sub_resource type="Animation" id="Animation_o7bxd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/Idle-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprites/Run-sheet:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprites/Death-sheet:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D2:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1jmte"]
+resource_name = "death"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/Death-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D2:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_t845l"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/Idle-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0hgiw"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/Run-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0pk78"]
+_data = {
+"RESET": SubResource("Animation_o7bxd"),
+"death": SubResource("Animation_1jmte"),
+"idle": SubResource("Animation_t845l"),
+"run": SubResource("Animation_0hgiw")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42u17"]
+resource_local_to_scene = true
+shader = ExtResource("2_48xkr")
+shader_parameter/flash_color = null
+shader_parameter/flash_modifier = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_go2ee"]
+radius = 30.001
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gre3h"]
+size = Vector2(11.25, 22.5)
+
+[sub_resource type="Animation" id="Animation_4tivi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_bnqty"]
+resource_name = "damage"
+length = 0.03
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.03),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oif2t"]
+_data = {
+"RESET": SubResource("Animation_4tivi"),
+"damage": SubResource("Animation_bnqty")
+}
+
+[node name="Wizard" type="CharacterBody2D"]
+scale = Vector2(0.8, 0.8)
+collision_mask = 8
+script = ExtResource("1_85px3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0pk78")
+}
+
+[node name="sprites" type="Node2D" parent="."]
+material = SubResource("ShaderMaterial_42u17")
+
+[node name="Idle-sheet" type="Sprite2D" parent="sprites"]
+use_parent_material = true
+texture = ExtResource("2_ey6cn")
+hframes = 4
+
+[node name="Run-sheet" type="Sprite2D" parent="sprites"]
+visible = false
+use_parent_material = true
+position = Vector2(1, -14)
+texture = ExtResource("3_lbjvt")
+hframes = 6
+
+[node name="Death-sheet" type="Sprite2D" parent="sprites"]
+visible = false
+use_parent_material = true
+position = Vector2(16, 0)
+texture = ExtResource("4_wy4uo")
+hframes = 6
+
+[node name="hand" type="Node2D" parent="sprites"]
+use_parent_material = true
+position = Vector2(0, 4)
+script = ExtResource("5_tq111")
+
+[node name="bulletpoint" type="Marker2D" parent="sprites/hand"]
+position = Vector2(28, 1)
+
+[node name="staffb" type="Sprite2D" parent="sprites/hand"]
+position = Vector2(17.5, 1)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_nafhe")
+
+[node name="Sprite2D" type="Sprite2D" parent="sprites/hand"]
+use_parent_material = true
+position = Vector2(17, 0)
+texture = ExtResource("5_5ly6x")
+hframes = 2
+vframes = 4
+
+[node name="stafff" type="Sprite2D" parent="sprites/hand"]
+position = Vector2(20.5, 1)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("8_qr2hw")
+
+[node name="Area2D" type="Area2D" parent="sprites/hand"]
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sprites/hand/Area2D"]
+shape = SubResource("CircleShape2D_go2ee")
+
+[node name="Sprite2D" type="Sprite2D" parent="sprites"]
+position = Vector2(1.25, 17.125)
+scale = Vector2(0.625, 0.890625)
+z_index = -1
+z_as_relative = false
+texture = ExtResource("9_gwj1r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.875, 3.75)
+shape = SubResource("RectangleShape2D_gre3h")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2(4, 4)
+script = ExtResource("9_1nnx5")
+
+[node name="spawner" parent="Camera2D" instance=ExtResource("9_js6ln")]
+position = Vector2(198.75, -110)
+
+[node name="spawner2" parent="Camera2D" instance=ExtResource("9_js6ln")]
+position = Vector2(-197.5, -110)
+
+[node name="spawner3" parent="Camera2D" instance=ExtResource("9_js6ln")]
+position = Vector2(-197.5, 108.75)
+
+[node name="spawner4" parent="Camera2D" instance=ExtResource("9_js6ln")]
+position = Vector2(195, 108.75)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_b57v1")
+volume_db = -8.0
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_c8vqd")
+volume_db = -3.0
+
+[node name="bar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -16.25
+offset_top = -22.5
+offset_right = 23.75
+offset_bottom = 17.5
+scale = Vector2(0.206151, 0.109953)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="bar"]
+offset_right = 40.0
+offset_bottom = 40.0
+max_value = 150.0
+value = 150.0
+texture_under = ExtResource("14_3toid")
+texture_over = ExtResource("15_ieax2")
+texture_progress = ExtResource("14_3toid")
+tint_under = Color(0.0784314, 0.0784314, 0.0784314, 1)
+tint_over = Color(0.137255, 0.137255, 0.137255, 1)
+tint_progress = Color(0, 0.54902, 0.0196078, 1)
+
+[node name="hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="hud"]
+offset_left = -218.75
+offset_top = -136.25
+offset_right = -102.75
+offset_bottom = -113.25
+scale = Vector2(0.744779, 0.659977)
+bbcode_enabled = true
+text = "SCORE : 0"
+scroll_active = false
+
+[node name="TextureRect" type="TextureRect" parent="hud"]
+offset_left = 160.0
+offset_top = -137.5
+offset_right = 676.0
+offset_bottom = 362.5
+scale = Vector2(0.0402451, 0.039265)
+texture = ExtResource("16_qnqlx")
+stretch_mode = 2
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="hud"]
+offset_left = -202.5
+offset_top = -121.25
+offset_right = 193.5
+offset_bottom = -27.25
+text = "Left mouse button to shoot
+Right mouse button for shield
+Shield take sometime to recharge , see the shield status on upper right of screen"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oif2t")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="mouse_entered" from="sprites/hand/Area2D" to="sprites/hand" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="sprites/hand/Area2D" to="sprites/hand" method="_on_area_2d_mouse_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

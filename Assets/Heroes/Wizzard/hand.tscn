@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://lqj5o1u41u5x"]
+
+[ext_resource type="Script" path="res://Assets/Heroes/Wizzard/hand.gd" id="1_212p3"]
+[ext_resource type="Texture2D" uid="uid://ckxf1nvt4yk58" path="res://Assets/Weapons/Hands/Hands.png" id="2_1pxnd"]
+
+[node name="hand" type="Marker2D"]
+position = Vector2(15, 5)
+script = ExtResource("1_212p3")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, 0)
+texture = ExtResource("2_1pxnd")
+hframes = 2
+vframes = 4

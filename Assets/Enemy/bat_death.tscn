@@ -1,0 +1,63 @@
+[gd_scene load_steps=12 format=3 uid="uid://cnup50jo5yeer"]
+
+[ext_resource type="Script" path="res://bat death.gd" id="1_nw1ux"]
+[ext_resource type="Texture2D" uid="uid://bp4yi60nr68q6" path="res://Assets/Enemy/Bat_Sprite_Sheet.png" id="2_y8apy"]
+[ext_resource type="Texture2D" uid="uid://t73raj641omd" path="res://Assets/shadow.png" id="3_vjdvq"]
+[ext_resource type="AudioStream" uid="uid://crut8acjckms7" path="res://Assets/Bat Death - QuickSounds.com.mp3" id="4_xhpmm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o47li"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(64, 24, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0daw"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(0, 48, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tht4l"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(16, 48, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2o0dr"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(32, 48, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqtgx"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(48, 48, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cul5r"]
+atlas = ExtResource("2_y8apy")
+region = Rect2(64, 48, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wgvet"]
+animations = [{
+"frames": [SubResource("AtlasTexture_o47li"), SubResource("AtlasTexture_s0daw"), SubResource("AtlasTexture_tht4l"), SubResource("AtlasTexture_2o0dr"), SubResource("AtlasTexture_tqtgx"), SubResource("AtlasTexture_cul5r")],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="bat death" type="Node2D"]
+script = ExtResource("1_nw1ux")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+frames = SubResource("SpriteFrames_wgvet")
+playing = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 12.5)
+scale = Vector2(0.5, 0.3)
+z_index = -1
+z_as_relative = false
+texture = ExtResource("3_vjdvq")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_xhpmm")
+volume_db = -12.5
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.47
+one_shot = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
